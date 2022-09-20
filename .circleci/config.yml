@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  slack: circleci/slack@4.10.1
 
 commands:
   destroy-environment:
@@ -122,9 +124,27 @@ jobs:
           command: |
             cd backend
             npm install
-            npm audit fix --audit-level=critical --force
+            # npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
+      - slack/notify:
+          custom: |
+              {
+                "blocks": [
+                  {
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "plain_text",
+                        "text": "*This is a text notification*",
+                        "emoji": true
+                      }
+                    ]
+                  }
+                ]
+              }
+          event: always
+
 
 #   deploy-infrastructure:
 #     docker:
