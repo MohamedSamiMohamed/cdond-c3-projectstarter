@@ -201,10 +201,19 @@ jobs:
     steps:
       - checkout
       - install_ansible
+      - install_aws_cli
       - add_ssh_keys:
           fingerprints: ["67:08:1f:9b:35:bc:ca:4f:53:46:91:66:71:45:36:37"]
       - attach_workspace:
           at: ~/
+      - run:
+          name: Add back-end ip to ansible inventory
+          command: |
+            cd .circleci/ansible
+            pwd
+            echo "[Web]" > inventory.txt
+            aws --region us-east-1 ec2 describe-instances --filters "Name=tag:Name, Values=backend-${CIRCLE_WORKFLOW_ID:0:7}"  --query 'Reservations[*].Instances[*].[PublicIpAddress]' --output text >> inventory.txt
+            cat inventory.txt
       - run:
           name: Configure server
           command: |
