@@ -4,13 +4,6 @@
   file:
     path: ~/backend
     state: directory
-  register: debug_mkdir
-
-- name: monitor_1
-  debug:
-    msg: "{{ debug_mkdir.stdout_lines }}"
-
-
 - name: "unarchive backend"
   become: true
   unarchive:
