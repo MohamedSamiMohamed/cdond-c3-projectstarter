@@ -8,7 +8,7 @@
   become: true
   unarchive:
     src: artifact.tar.gz
-    dist: ~/backend
+    dest: ~/backend
 
 - name: "update apt packages"
   become: true
