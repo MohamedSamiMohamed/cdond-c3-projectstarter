@@ -320,7 +320,7 @@ jobs:
             export TYPEORM_MIGRATIONS=./migrations/*.ts
             cd  ~/project/.circleci/ansible
             echo "[web]" > inventory.txt
-            echo 3.95.213.123 >> inventory.txt
+            echo 18.233.161.109 >> inventory.txt
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml   
