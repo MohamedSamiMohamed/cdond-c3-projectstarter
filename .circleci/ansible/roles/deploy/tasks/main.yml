@@ -2,7 +2,10 @@
 
 - name: "create backend directory"
   become: true
-  shell: mkdir ~/backend
+  shell: | 
+    mkdir ~/backend
+    ls
+    pwd
 
 - name: "unarchive backend"
   become: true
