@@ -37,11 +37,14 @@
 - name: "start the server"
   become: true
   shell: |
-    cd ~/backend
+    cd /home/ubuntu/backend
+    echo "befor npm install -->"
     ls
     npm install
+    echo "after npm install -->"
     ls
-    cd ~/backend/dist
+    cd /home/ubuntu/backend/dist
+    ls
     pm2 stop default
     pm2 start main.js
     # pm2 start npm -- start
