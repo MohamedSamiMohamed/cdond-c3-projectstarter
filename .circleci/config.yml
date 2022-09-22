@@ -285,10 +285,16 @@ jobs:
                     
   deploy-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
       - checkout
       - install_ansible
+      - install_aws_cli
+      - run:
+          name: install node
+          command: |
+            pkg install node
+      
       - add_ssh_keys:
           fingerprints: ["67:08:1f:9b:35:bc:ca:4f:53:46:91:66:71:45:36:37"]
       - attach_workspace:
