@@ -52,7 +52,7 @@ commands:
           when: on_fail
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            SUCCESS = $(https://kvdb.io/${KVDB_BUCKET_NAME}/migrations-<<parameters.CIRCLE_WORKFLOW_ID>>)
+            SUCCESS = $(curl --insecure https://kvdb.io/${KVDB_BUCKET_NAME}/migrations-<<parameters.CIRCLE_WORKFLOW_ID>>)
             if(( $SUCCESS==1 )); 
             then
              cd ~/project/backend
@@ -216,7 +216,7 @@ jobs:
       #       cd .circleci/ansible
       #       pwd
       #       echo "[web]" > inventory.txt
-      #       aws --region us-east-1 ec2 describe-instances --filters --query 'Reservations[*].Instances[*].[PublicIpAddress]' --output text | grep 54 >> inventory.txt
+      #       aws --region us-east-1 ec2 describe-instances --filters --query 'Reservations[*].Instances[*].[PublicIpAddress]' --output text | grep 44 >> inventory.txt
       #       cat inventory.txt
       - run:
           name: Configure server
@@ -246,7 +246,7 @@ jobs:
           command: |
             if grep "has been executed successfully" ~/project/backend/migrations_log.txt
             then
-              curl https://kvdb.io/${KVDB_BUCKET_NAME}/migrations-${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+              curl --insecure https://kvdb.io/${KVDB_BUCKET_NAME}/migrations-${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
       - destroy-environment
       - revert-migrations
