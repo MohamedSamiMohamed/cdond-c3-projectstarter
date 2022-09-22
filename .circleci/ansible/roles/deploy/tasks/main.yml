@@ -6,6 +6,12 @@
     mkdir ~/backend
     ls
     pwd
+  register: debug_mkdir
+
+- name: monitor_1
+  debug:
+    msg: "{{ debug_mkdir.stdout_lines }}"
+
 
 - name: "unarchive backend"
   become: true
@@ -44,7 +50,8 @@
     npm install
     cd dist
     pm2 stop default
-    pm2 start npm -- start
+    pm2 start main.js
+    # pm2 start npm -- start
   register: execute_node
 
 - name: monitor
